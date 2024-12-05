@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: product-service
+  cloud:
+    config:
+      enabled: false #Disable Spring Cloud Config during tests
+  datasource:
+    url: jdbc:tc:postgresql:11.1:///integration-tests-db
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+  jpa:
+    hibernate:
+      ddl-auto: create
+  flyway:
+    enabled: false
+eureka:
+  client:
+    enabled: false #Disable Eureka Client during tests

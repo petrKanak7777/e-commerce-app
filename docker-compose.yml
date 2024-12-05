@@ -1,0 +1,166 @@
+services:
+  postgres:
+    container_name: ms_pg_sql
+    image: postgres
+    environment:
+      POSTGRES_USER: pKanak
+      POSTGRES_PASSWORD: pKanak
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - microservices-net
+    restart: unless-stopped
+
+  pgadmin:
+    container_name: ms_pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    ports:
+      - 5050:80
+    networks:
+      - microservices-net
+    restart: unless-stopped
+
+  mongo-express:
+    image: mongo-express
+    container_name: ms_mongo_express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo-db
+      ME_CONFIG_MONGODB_PORT: 27017
+      ME_CONFIG_MONGODB_ADMINUSERNAME: pKanak
+      ME_CONFIG_MONGODB_ADMINPASSWORD: pKanak
+      ME_CONFIG_BASICAUTH_PASSWORD: pKanak
+      ME_CONFIG_BASICAUTH_USERNAME: pKanak
+    depends_on:
+      - mongo-db
+    networks:
+      - microservices-net
+
+  mongo-db:
+    image: mongo
+    container_name: ms_mongo_db
+    ports:
+      - 27017:27017
+    volumes:
+      - mongovol:/data
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: pKanak
+      MONGO_INITDB_ROOT_PASSWORD: pKanak
+    networks:
+      - microservices-net
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    container_name: ms_zookeeper
+    environment:
+      ZOOKEEPER_SERVER_ID: 1
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "22181:2181"
+    networks:
+      - microservices-net
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    container_name: ms_kafka
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+    networks:
+      - microservices-net
+
+  mail-dev:
+    container_name: ms_mail_dev
+    image: maildev/maildev
+    ports:
+      - 1080:1080
+      - 1025:1025
+
+  zipkin:
+    container_name: ms_zipkin
+    image: openzipkin/zipkin
+    ports:
+      - "9411:9411"
+    networks:
+      - microservices-net
+
+#  config-server:
+#    container_name: ms_config_server
+#    image: ms-config-server
+#    ports:
+#      - "8888:8888"
+#    networks:
+#      - microservices-net
+#
+#  discovery-server:
+#    container_name: ms_discovery_server
+#    image: ms-discovery-server
+#    ports:
+#      - "8761:8761"
+#    networks:
+#      - microservices-net
+#    depends_on:
+#      - config-server
+#
+#  product:
+#    container_name: ms_product
+#    image: ms-product
+#    ports:
+#      - "8050:8050"
+#    networks:
+#      - microservices-net
+#    depends_on:
+#      - discovery-server
+
+#  elasticsearch:
+#    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.3
+#    container_name: ms_elasticsearch
+#    environment:
+#      - discovery.type=single-node
+#    ports:
+#      - "9200:9200"
+#
+#  logstash:
+#    image: docker.elastic.co/logstash/logstash:7.17.3
+#    container_name: ms_logstash
+#    ports:
+#      - "5044:5044"
+#    volumes:
+#      - ./logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+#
+#  kibana:
+#    image: docker.elastic.co/kibana/kibana:7.17.3
+#    container_name: ms_kibana
+#    ports:
+#      - "5601:5601"
+#    environment:
+#      ELASTICSEARCH_URL: http://elasticsearch:9200
+
+networks:
+  microservices-net:
+    driver: bridge
+
+volumes:
+  postgres:
+  pgadmin:
+  mongovol:
