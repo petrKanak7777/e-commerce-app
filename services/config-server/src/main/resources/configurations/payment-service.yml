@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/order
+    url: jdbc:postgresql://localhost:5432/payment
     username: pKanak
     password: pKanak
     driver-class-name: org.postgresql.Driver
@@ -21,8 +21,10 @@ spring:
       bootstrap-servers: localhost:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.type.mapping: notificationInfo:com.pk.ecommerce.kafka.PaymentNotificationRequest
 server:
-  port: 8077
+  port: 8060
 
 application:
   config:
@@ -30,4 +32,10 @@ application:
     payment-url: http://localhost:8222/api/v1/payments #In next phase use url from api-gateway! api-gateway-port(8222) - 8060
     product-url: http://localhost:8222/api/v1/products #In next phase use url from api-gateway! api-gateway-port(8222) - 8050
     kafka:
-      order-topic: order-topic
+      payment-topic: payment-topic
+
+logging:
+  level:
+    root: INFO # TRACE DEBUG INFO WARN ERROR
+    com:
+      pk: INFO
