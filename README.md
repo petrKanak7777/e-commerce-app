@@ -2,7 +2,7 @@
 
 Implementation of e-commerce application based on: https://www.youtube.com/watch?v=jdeSV0GRvwI&t=966s
 
-4h:13:26min
+4h:42:0min
 
 ##Used technologies
 - Java 21 ![java](resources/icons/ico-java.png)
@@ -31,6 +31,13 @@ Implementation of e-commerce application based on: https://www.youtube.com/watch
 
 Connection information: \
 ![pg-db-connection](resources/images/db-conn.png)
+
+###Kafka
+For inspecting Kafka. We can use **Offset Explorer tool**. \
+You can download this application here: https://www.kafkatool.com/download.html \
+To connect to kafka with zookeeper set these configurations:
+
+![off-exp-conn](resources/images/off-exp-conn.png)
 
 ###Mongo express
 
