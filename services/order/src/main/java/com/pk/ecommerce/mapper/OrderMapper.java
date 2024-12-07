@@ -1,44 +1,37 @@
 package com.pk.ecommerce.mapper;
 
+import com.pk.ecommerce.kafka.OrderConfirmation;
 import com.pk.ecommerce.model.entity.Order;
 import com.pk.ecommerce.model.request.OrderRequest;
+import com.pk.ecommerce.model.request.PaymentRequest;
+import com.pk.ecommerce.model.response.CustomerResponse;
 import com.pk.ecommerce.model.response.OrderResponse;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.pk.ecommerce.model.response.ProductPurchaseResponse;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingConstants;
 
-import java.util.Objects;
+import java.util.List;
 
-@Service
-@AllArgsConstructor
-public class OrderMapper {
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+public interface OrderMapper {
 
-    private final OrderLineMapper orderLineMapper;
+    @Mapping(target = "totalAmount", source = "amount")
+    Order toOrder(OrderRequest request);
 
-    public Order toOrder(OrderRequest request) {
-        if (Objects.isNull(request)) {
-            throw new NullPointerException("Input order request value is null");
-        }
+    OrderResponse toOrderResponse(Order order);
 
-        return Order.builder()
-                .id(request.id())
-                .reference(request.reference())
-                .totalAmount(request.amount())
-                .paymentMethod(request.paymentMethod())
-                .customerId(request.customerId())
-                .build();
-    }
+    @Mapping(target = "amount", source = "request.amount")
+    @Mapping(target = "paymentMethod", source = "request.paymentMethod")
+    @Mapping(target = "customer.id", source = "customer.id")
+    @Mapping(target = "customer.firstName", source = "customer.firstName")
+    @Mapping(target = "customer.lastName", source = "customer.lastName")
+    @Mapping(target = "customer.email", source = "customer.email")
+    PaymentRequest toPaymentRequest(OrderRequest request, Integer orderId, CustomerResponse customer);
 
-    public OrderResponse toOrderResponse(Order order) {
-        if (Objects.isNull(order)) {
-            throw new NullPointerException("Input order value is null");
-        }
-
-        return new OrderResponse(
-                order.getId(),
-                order.getReference(),
-                order.getTotalAmount(),
-                order.getPaymentMethod(),
-                order.getCustomerId()
-        );
-    }
+    @Mapping(target = "orderReference", source = "request.reference")
+    @Mapping(target = "totalAmount", source = "request.amount")
+    @Mapping(target = "paymentMethod", source = "request.paymentMethod")
+    @Mapping(target = "customerResponse", source = "customer")
+    OrderConfirmation toOrderConfirmation(OrderRequest request, CustomerResponse customer, List<ProductPurchaseResponse> products);
 }
