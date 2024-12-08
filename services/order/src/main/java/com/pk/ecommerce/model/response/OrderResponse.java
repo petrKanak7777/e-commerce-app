@@ -1,6 +1,6 @@
 package com.pk.ecommerce.model.response;
 
-import com.pk.ecommerce.model.PaymentMethod;
+import com.pk.ecommerce.model.enums.PaymentMethod;
 
 import java.math.BigDecimal;
 

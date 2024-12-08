@@ -1,6 +1,6 @@
 package com.pk.ecommerce.model.entity;
 
-import com.pk.ecommerce.model.PaymentMethod;
+import com.pk.ecommerce.model.enums.PaymentMethod;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;

@@ -15,6 +15,7 @@
         <module>services/product</module>
         <module>services/order</module>
         <module>services/payment</module>
+        <module>services/notification</module>
     </modules>
 
 </project>

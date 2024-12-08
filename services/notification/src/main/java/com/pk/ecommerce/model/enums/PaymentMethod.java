@@ -1,4 +1,4 @@
-package com.pk.ecommerce.model;
+package com.pk.ecommerce.model.enums;
 
 public enum PaymentMethod {
     PAYPAL,
