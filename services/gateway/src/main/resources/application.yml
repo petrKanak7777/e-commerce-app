@@ -2,4 +2,4 @@ spring:
   config:
     import: optional:configserver:http://localhost:8888 # Get config from config-server
   application:
-    name: notification-service
+    name: gateway-service

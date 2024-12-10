@@ -23,6 +23,7 @@ public interface OrderMapper {
 
     @Mapping(target = "amount", source = "request.amount")
     @Mapping(target = "paymentMethod", source = "request.paymentMethod")
+    @Mapping(target = "orderReference", source = "request.reference")
     @Mapping(target = "customer.id", source = "customer.id")
     @Mapping(target = "customer.firstName", source = "customer.firstName")
     @Mapping(target = "customer.lastName", source = "customer.lastName")

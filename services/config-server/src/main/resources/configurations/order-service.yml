@@ -28,9 +28,9 @@ server:
 
 application:
   config:
-    customer-url: http://localhost:8090/api/v1/customers #In next phase use url from api-gateway! api-gateway-port(8222) - 8090
-    payment-url: http://localhost:8060/api/v1/payments #In next phase use url from api-gateway! api-gateway-port(8222) - 8060
-    product-url: http://localhost:8050/api/v1/products #In next phase use url from api-gateway! api-gateway-port(8222) - 8050
+    customer-url: http://localhost:8222/api/v1/customers #In next phase use url from api-gateway! api-gateway-port(8222) - 8090
+    payment-url: http://localhost:8222/api/v1/payments #In next phase use url from api-gateway! api-gateway-port(8222) - 8060
+    product-url: http://localhost:8222/api/v1/products #In next phase use url from api-gateway! api-gateway-port(8222) - 8050
     kafka:
       order-topic: order-topic
 

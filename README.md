@@ -2,7 +2,7 @@
 
 Implementation of e-commerce application based on: https://www.youtube.com/watch?v=jdeSV0GRvwI&t=966s
 
-5h:00:0min
+5h:44:0min
 
 ##Used technologies
 - Java 21 ![java](resources/icons/ico-java.png)
@@ -50,6 +50,10 @@ Basic authentication \
 ###Discovery-server
 
 **DS**: http://localhost:8761
+
+###Mail-server
+
+**MS**: http://localhost:1080
 
 ###ELK-stack
 Based on: https://medium.com/@sovisrushain/monitoring-spring-boot-microservices-logs-with-the-elk-stack-aeeaf3e98d7b

@@ -1,6 +1,6 @@
 package com.pk.ecommerce.model.response;
 
-import com.pk.ecommerce.model.Address;
+import com.pk.ecommerce.model.entity.Address;
 import lombok.Builder;
 
 @Builder

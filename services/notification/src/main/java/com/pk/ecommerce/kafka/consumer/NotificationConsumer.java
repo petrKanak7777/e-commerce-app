@@ -17,7 +17,7 @@ public class NotificationConsumer {
     private final NotificationService notificationService;
     private final EmailService emailService;
 
-    @KafkaListener(topics = "${application.config.kafka.payment-topic}")
+    @KafkaListener(topics = "${application.config.kafka.payment-topic}", groupId = "paymentGroup")
     public void consumePaymentSuccessNotification(PaymentConfirmation paymentConfirmation) throws MessagingException {
         log.info("Consuming the message from: ${application.config.kafka.payment-topic}, paymentConfirmation=[{}]",
                 paymentConfirmation);
@@ -33,7 +33,7 @@ public class NotificationConsumer {
         );
     }
 
-    @KafkaListener(topics = "${application.config.kafka.order-topic}")
+    @KafkaListener(topics = "${application.config.kafka.order-topic}", groupId = "orderGroup")
     public void consumeOrderSuccessConfirmation(OrderConfirmation orderConfirmation) throws MessagingException {
         log.info("Consuming the message from: ${application.config.kafka.order-topic}, orderConfirmation=[{}]",
                 orderConfirmation);
@@ -42,11 +42,12 @@ public class NotificationConsumer {
 
         var customerName = orderConfirmation.customerResponse().firstName()
                 + " " + orderConfirmation.customerResponse().lastName();
-        emailService.sendPaymentSuccessEmail(
+        emailService.sendOrderConfirmationEmail(
                 orderConfirmation.customerResponse().email(),
                 customerName,
                 orderConfirmation.totalAmount(),
-                orderConfirmation.orderReference()
+                orderConfirmation.orderReference(),
+                orderConfirmation.products()
         );
     }
 }

@@ -1,40 +1,21 @@
 package com.pk.ecommerce.mapper;
 
-import com.pk.ecommerce.model.entity.Order;
 import com.pk.ecommerce.model.entity.OrderLine;
 import com.pk.ecommerce.model.request.OrderLineRequest;
+import com.pk.ecommerce.model.request.PurchaseRequest;
 import com.pk.ecommerce.model.response.OrderLineResponse;
-import org.springframework.stereotype.Service;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingConstants;
 
-import java.util.Objects;
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+public interface OrderLineMapper {
 
-@Service
-public class OrderLineMapper {
-    public OrderLine toOrderLine(OrderLineRequest orderLineRequest) {
-        if (Objects.isNull(orderLineRequest)) {
-            throw new NullPointerException("Input order line request value is null");
-        }
+    @Mapping(target = "order.id", source = "orderId")
+    OrderLine toOrderLine(OrderLineRequest orderLineRequest);
 
-        return OrderLine.builder()
-                .id(orderLineRequest.id())
-                .quantity(orderLineRequest.quantity())
-                .order(
-                        Order.builder()
-                                .id(orderLineRequest.orderId())
-                                .build())
-                .build();
-    }
+    OrderLineRequest toOrderLineRequest(PurchaseRequest product, Integer orderId);
 
-    public OrderLineResponse toOrderLineResponse(OrderLine orderLine) {
-        if (Objects.isNull(orderLine)) {
-            throw new NullPointerException("Input order line value is null");
-        }
-
-        return new OrderLineResponse(
-                orderLine.getId(),
-                orderLine.getProductId(),
-                orderLine.getQuantity(),
-                orderLine.getOrder().getId()
-        );
-    }
+    @Mapping(target = "orderId", source = "order.id")
+    OrderLineResponse toOrderLineResponse(OrderLine orderLine);
 }

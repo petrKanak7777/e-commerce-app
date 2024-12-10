@@ -1,6 +1,5 @@
 package com.pk.ecommerce.model.entity;
 
-import com.pk.ecommerce.model.Address;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

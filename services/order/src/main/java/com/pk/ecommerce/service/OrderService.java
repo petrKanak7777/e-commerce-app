@@ -7,9 +7,7 @@ import com.pk.ecommerce.error.Exception.BusinessException;
 import com.pk.ecommerce.error.exception.ResourceNotFoundException;
 import com.pk.ecommerce.kafka.producer.OrderProducer;
 import com.pk.ecommerce.mapper.OrderMapper;
-import com.pk.ecommerce.model.request.OrderLineRequest;
 import com.pk.ecommerce.model.request.OrderRequest;
-import com.pk.ecommerce.model.request.PurchaseRequest;
 import com.pk.ecommerce.model.response.CustomerResponse;
 import com.pk.ecommerce.model.response.OrderResponse;
 import com.pk.ecommerce.repository.OrderRepository;
@@ -38,7 +36,7 @@ public class OrderService {
         var products = productClient.purchaseProducts(request.products());
         var order = orderRepository.save(orderMapper.toOrder(request));
 
-        saveOrderLines(request.products(), request.id());
+        orderLineService.saveOrderLines(request.products(), order.getId());
         paymentClient.requestOrderPayment(orderMapper.toPaymentRequest(request, order.getId(), customer));
         orderProducer.sendOrderConfirmation(orderMapper.toOrderConfirmation(request, customer, products));
 
@@ -50,18 +48,6 @@ public class OrderService {
                 .orElseThrow(() -> new BusinessException(
                         format("Cannot create order. Customer with id=[%s] not found", customerId)
                 ));
-    }
-
-    private void saveOrderLines(List<PurchaseRequest> products, Integer orderId) {
-        // todo: here use orderLineService.saveOrderLines()
-        for(PurchaseRequest purchaseRequest : products) {
-            orderLineService.saveOrderLine(new OrderLineRequest(
-                    null,
-                    orderId,
-                    purchaseRequest.productId(),
-                    purchaseRequest.quantity()
-            ));
-        }
     }
 
     public List<OrderResponse> findAll() {

@@ -1,5 +1,0 @@
-#name discovery-service.yml is based on name of service discovery-service
-
-eureka:
-  instance:
-    hostname: localhost

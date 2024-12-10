@@ -1,6 +1,6 @@
 package com.pk.ecommerce.model.request;
 
-import com.pk.ecommerce.model.Address;
+import com.pk.ecommerce.model.entity.Address;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 

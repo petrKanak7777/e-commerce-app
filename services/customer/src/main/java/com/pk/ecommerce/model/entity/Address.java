@@ -1,4 +1,4 @@
-package com.pk.ecommerce.model;
+package com.pk.ecommerce.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
