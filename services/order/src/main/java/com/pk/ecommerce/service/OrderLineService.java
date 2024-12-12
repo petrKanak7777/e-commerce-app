@@ -7,10 +7,12 @@ import com.pk.ecommerce.model.request.PurchaseRequest;
 import com.pk.ecommerce.model.response.OrderLineResponse;
 import com.pk.ecommerce.repository.OrderLineRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class OrderLineService {
@@ -25,10 +27,12 @@ public class OrderLineService {
                 .map(orderLineMapper::toOrderLine)
                 .toList();
 
-        return orderLineRepository.saveAll(orderLines)
+        var orderLinesId = orderLineRepository.saveAll(orderLines)
                 .stream()
                 .map(OrderLine::getId)
                 .toList();
+        log.info("INFO - Order lines=[{}] was successfully saved", orderLinesId);
+        return orderLinesId;
     }
 
     public List<OrderLineResponse> findByOrderId(Integer orderId) {

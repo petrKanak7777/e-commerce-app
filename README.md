@@ -2,7 +2,7 @@
 
 Implementation of e-commerce application based on: https://www.youtube.com/watch?v=jdeSV0GRvwI&t=966s
 
-5h:44:0min
+6h:13:0min
 
 ##Used technologies
 - Java 21 ![java](resources/icons/ico-java.png)

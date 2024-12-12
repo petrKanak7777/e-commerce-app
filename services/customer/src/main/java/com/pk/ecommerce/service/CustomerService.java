@@ -7,6 +7,7 @@ import com.pk.ecommerce.model.request.CustomerRequest;
 import com.pk.ecommerce.model.response.CustomerResponse;
 import com.pk.ecommerce.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -16,6 +17,7 @@ import java.util.Objects;
 
 import static java.lang.String.format;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CustomerService {
@@ -66,14 +68,16 @@ public class CustomerService {
 
     public CustomerResponse findByCustomerId(String customerId) {
         if (Objects.isNull(customerId)) {
-            throw new NullPointerException("CustomerId value is null");
+            throw new NullPointerException("ERROR - CustomerId value is null");
         }
 
-        return customerRepository.findById(customerId)
+        var customer = customerRepository.findById(customerId)
                 .map(customerMapper::toCustomerResponse)
                 .orElseThrow(() -> new ResourceNotFoundException(
-                        format("Cannot get customer. Customer with id=[%s] not found", customerId)
+                        format("ERROR - Cannot get customer. Customer with id=[%s] not found", customerId)
                 ));
+        log.info("INFO - Customer with id=[{}] and email=[{}] was successfully find", customer.id(), customer.email());
+        return customer;
     }
 
     public void deleteCustomer(String customerId) {

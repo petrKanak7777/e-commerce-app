@@ -7,6 +7,7 @@ import com.pk.ecommerce.model.response.ProductResponse;
 import com.pk.ecommerce.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/products")
 @RequiredArgsConstructor
@@ -35,6 +37,7 @@ public class ProductController {
     public ResponseEntity<List<ProductPurchaseResponse>> purchaseProducts(
             @RequestBody List<ProductPurchaseRequest> request
     ) {
+        log.info("call: /api/v1/products/purchase, operation-name: purchaseProducts, params: request=[{}]", request);
         return ResponseEntity.ok(productService.purchaseProducts(request));
     }
 

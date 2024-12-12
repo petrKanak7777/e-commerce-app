@@ -35,6 +35,7 @@ application:
       payment-topic: payment-topic
 
 logging:
+  config: classpath:logback-spring.xml
   level:
     root: INFO # TRACE DEBUG INFO WARN ERROR
     com:

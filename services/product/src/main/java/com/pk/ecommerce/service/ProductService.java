@@ -9,6 +9,7 @@ import com.pk.ecommerce.model.response.ProductPurchaseResponse;
 import com.pk.ecommerce.model.response.ProductResponse;
 import com.pk.ecommerce.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import java.util.List;
 
 import static java.lang.String.format;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ProductService {
@@ -38,7 +40,7 @@ public class ProductService {
 
         var storedProducts = productRepository.findAllByIdInOrderById(productsId);
         if(productsId.size() != storedProducts.size()) {
-            throw new ProductPurchaseException("One or more products does not exists");
+            throw new ProductPurchaseException("ERROR - One or more products does not exists");
         }
 
         var storedRequest = request
@@ -52,7 +54,7 @@ public class ProductService {
             var productRequest = storedRequest.get(i);
             if(product.getAvailableQuantity() < productRequest.quantity()) {
                 throw new ProductPurchaseException(
-                        String.format("Insufficient stock quantity for product with ID[%s]. Requested quantity[%,.4f], but available quantity[%,.4f]",
+                        String.format("ERROR - Insufficient stock quantity for product with id=[%s]. Requested quantity=[%,.4f], but available quantity=[%,.4f]",
                                 productRequest.productId(),
                                 productRequest.quantity(),
                                 product.getAvailableQuantity()));
@@ -69,6 +71,7 @@ public class ProductService {
             purchasedProducts.add(productMapper.toProductPurchaseResponse(product, productRequest.quantity()));
         }
 
+        log.info("INFO - Products was successfully purchased");
         return purchasedProducts;
     }
 

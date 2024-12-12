@@ -9,3 +9,6 @@ spring:
       authentication-database: admin
 server:
   port: 8090
+
+logging:
+  config: classpath:logback-spring.xml

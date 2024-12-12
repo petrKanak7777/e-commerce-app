@@ -3,6 +3,7 @@ package com.pk.ecommerce.client;
 import com.pk.ecommerce.error.Exception.BusinessException;
 import com.pk.ecommerce.model.request.PurchaseRequest;
 import com.pk.ecommerce.model.response.ProductPurchaseResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Objects;
 
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 import static org.springframework.http.HttpMethod.POST;
@@ -22,6 +24,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
  * This client could be implemented like FeignClient.
  * But for educational purpose, we will implement it like RestTemplate.
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ProductClient {
@@ -44,9 +47,13 @@ public class ProductClient {
                 responseType
         );
         if(responseEntity.getStatusCode().isError()) {
-            throw new BusinessException("An error occurred while processing the products purchase " + responseEntity.getStatusCode());
+            throw new BusinessException("ERROR - An error occurred while processing the products purchase " + responseEntity.getStatusCode());
         }
 
-        return responseEntity.getBody();
+        var purchasedProducts = responseEntity.getBody();
+        if(purchasedProducts != null) {
+            log.info("INFO - Purchased products with size=[{}] was successfully returned", purchasedProducts.size());
+        }
+        return purchasedProducts;
     }
 }

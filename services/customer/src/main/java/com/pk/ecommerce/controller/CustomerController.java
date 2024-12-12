@@ -5,6 +5,7 @@ import com.pk.ecommerce.model.response.CustomerResponse;
 import com.pk.ecommerce.service.CustomerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/customers")
 @RequiredArgsConstructor
@@ -55,6 +57,7 @@ public class CustomerController {
     public ResponseEntity<CustomerResponse> findByCustomerId(
             @PathVariable("customer-id") String customerId
     ) {
+        log.info("call: /api/v1/customers/{customer-id}, operation-name: findByCustomerId, params: customerId=[{}]", customerId);
         return ResponseEntity.ok(customerService.findByCustomerId(customerId));
     }
 
