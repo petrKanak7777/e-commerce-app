@@ -30,6 +30,7 @@ public class ProductController {
     public ResponseEntity<Integer> createProduct(
             @RequestBody @Valid ProductRequest request
     ) {
+        log.info("call: /api/v1/products, operation-name: createProduct, params: request=[{}]", request);
         return ResponseEntity.ok(productService.createProduct(request));
     }
 
@@ -45,11 +46,13 @@ public class ProductController {
     public ResponseEntity<ProductResponse> findByProductId(
             @PathVariable("product-id") Integer productId
     ) {
+        log.info("call: /api/v1/products/{product-id}, operation-name: findByProductId, params: productId=[{}]", productId);
         return ResponseEntity.ok(productService.findByProductId(productId));
     }
 
     @GetMapping
     public ResponseEntity<List<ProductResponse>> findAll() {
+        log.info("call: /api/v1/products, operation-name: findAll");
         return ResponseEntity.ok(productService.findAll());
     }
 }

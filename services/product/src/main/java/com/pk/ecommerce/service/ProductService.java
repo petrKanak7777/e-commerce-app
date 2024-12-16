@@ -28,6 +28,7 @@ public class ProductService {
 
     public Integer createProduct(ProductRequest request) {
         var product = productRepository.save(productMapper.toProduct(request));
+        log.info("INFO - Product with id=[{}] was successfully created", product.getId());
         return product.getId();
     }
 
@@ -76,17 +77,21 @@ public class ProductService {
     }
 
     public ProductResponse findByProductId(Integer productId) {
-        return productRepository.findById(productId)
+        var product = productRepository.findById(productId)
                 .map(productMapper::toProductResponse)
                 .orElseThrow(() -> new ResourceNotFoundException(
-                        format("Cannot get product. Product with id=[%s] not found", productId)
+                        format("ERROR - Cannot get product. Product with id=[%s] not found", productId)
                 ));
+        log.info("INFO - Product with id=[{}] was found", product.id());
+        return product;
     }
 
     public List<ProductResponse> findAll() {
-        return productRepository.findAll()
+        var products = productRepository.findAll()
                 .stream()
                 .map(productMapper::toProductResponse)
                 .toList();
+        log.info("INFO - Products with size=[{}] was successfully returned", products.size());
+        return products;
     }
 }

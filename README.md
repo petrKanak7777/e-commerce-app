@@ -78,6 +78,25 @@ for order-ms: http://localhost:8070/actuator/health
 ###Zipkin
 zipkin-ms: http://localhost:9411
 
+###Keycloak
+KC: http://localhost:9099 \
+Username: pKanak \
+Password: pKanak
+
+- create realm **micro-services**
+- create client **micro-services-client**
+
+With this setup we will authorize against gateway with **client-id** and **client-secret**
+
+**Setup postman:**
+- Authorization: OAuth 2.0
+- Grant type: Client Credentials
+- Access Token URL: http://localhost:9099/realms/micro-services/protocol/openid-connect/token
+- Client ID: micro-services-client
+- Client Secret: [value_from_keycloak]
+- Client Authentication: Send as Basic Auth header
+- get access token with button: Get New Access Token
+
 ###Docker
 ms-config-server: **docker build -t ms-config-server .** \
 ms-discovery-server: **docker build -t ms-discovery-server .** \

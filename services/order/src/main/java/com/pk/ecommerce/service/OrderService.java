@@ -47,10 +47,12 @@ public class OrderService {
     }
 
     public List<OrderResponse> findAll() {
-        return orderRepository.findAll()
+        var orders = orderRepository.findAll()
                 .stream()
                 .map(orderMapper::toOrderResponse)
                 .toList();
+        log.info("INFO - Orders with size=[{}] was successfully returned", orders.size());
+        return orders;
     }
 
     public OrderResponse findByOrderId(Integer orderId) {
@@ -58,11 +60,13 @@ public class OrderService {
             throw new NullPointerException("ERROR - orderId value is null");
         }
 
-        return orderRepository.findById(orderId)
+        var order = orderRepository.findById(orderId)
                 .map(orderMapper::toOrderResponse)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         format("ERROR - Cannot get order. Order with id=[%d] not found", orderId)
                 ));
+        log.info("INFO - Order with id=[{}] was successfully returned", order.id());
+        return order;
     }
 
     private CustomerResponse getCustomer(String customerId) {
