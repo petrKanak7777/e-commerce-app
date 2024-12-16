@@ -1,0 +1,268 @@
+{
+	"info": {
+		"_postman_id": "096de4ec-6156-4319-af19-dccd9b1e8d19",
+		"name": "E-Commerce-App",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5539390"
+	},
+	"item": [
+		{
+			"name": "ms-order",
+			"item": [
+				{
+					"name": "findByOrderId - 251",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url-order}}/251",
+							"host": [
+								"{{base-url-order}}"
+							],
+							"path": [
+								"251"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findByOrderId - 201",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url-order}}/201",
+							"host": [
+								"{{base-url-order}}"
+							],
+							"path": [
+								"201"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url-order}}",
+							"host": [
+								"{{base-url-order}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createOrder",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"reference\": \"MS-20231201\",\r\n    \"amount\": 900,\r\n    \"paymentMethod\": \"PAYPAL\",\r\n    \"customerId\": \"67586453bb3e1e42fc8bff19\",\r\n    \"products\" : [\r\n        {\r\n            \"productId\": 1,\r\n            \"quantity\": 1\r\n        },\r\n        {\r\n            \"productId\": 251,\r\n            \"quantity\": 2\r\n        },\r\n        {\r\n            \"productId\": 201,\r\n            \"quantity\": 3\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url-order}}",
+							"host": [
+								"{{base-url-order}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ms-product",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url-project}}",
+							"host": [
+								"{{base-url-project}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findByProductId - 51",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url-project}}/51",
+							"host": [
+								"{{base-url-project}}"
+							],
+							"path": [
+								"51"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findByProductId - 101",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url-project}}/101",
+							"host": [
+								"{{base-url-project}}"
+							],
+							"path": [
+								"101"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ms-customer",
+			"item": [
+				{
+					"name": "findByCustomerId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url-customer}}/67585f25f246670dbf0e1af2",
+							"host": [
+								"{{base-url-customer}}"
+							],
+							"path": [
+								"67585f25f246670dbf0e1af2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findAll",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "accessTokenUrl",
+									"value": "http://localhost:9099/realms/micro-services/protocol/openid-connect/token",
+									"type": "string"
+								},
+								{
+									"key": "clientSecret",
+									"value": "l4F7ZX0QXu8IqS6gBpZUba0qAK2Wtdb6",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "micro-services-client",
+									"type": "string"
+								},
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url-customer}}",
+							"host": [
+								"{{base-url-customer}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createCustomer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Doe\",\r\n    \"email\": \"john@email.com\",\r\n    \"address\": {\r\n        \"street\": \"Štarnovská\",\r\n        \"houseNumber\": \"77\",\r\n        \"zipCode\": \"78314\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url-customer}}",
+							"host": [
+								"{{base-url-customer}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateCustomer",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"67585f25f246670dbf0e1af2\",\r\n    \"firstName\": \"Jan\",\r\n    \"lastName\": \"Nesvadba\",\r\n    \"email\": \"jan.nesvadba123@gmail.com\",\r\n    \"address\": {\r\n        \"street\": \"Olomoucká\",\r\n        \"houseNumber\": \"45\",\r\n        \"zipCode\": \"120 00\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url-customer}}",
+							"host": [
+								"{{base-url-customer}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteCustomer",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base-url-customer}}/6758616cbb3e1e42fc8bff18",
+							"host": [
+								"{{base-url-customer}}"
+							],
+							"path": [
+								"6758616cbb3e1e42fc8bff18"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
