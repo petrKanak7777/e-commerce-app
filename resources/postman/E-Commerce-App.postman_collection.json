@@ -12,6 +12,36 @@
 				{
 					"name": "findByOrderId - 251",
 					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "accessTokenUrl",
+									"value": "http://localhost:9099/realms/micro-services/protocol/openid-connect/token",
+									"type": "string"
+								},
+								{
+									"key": "clientSecret",
+									"value": "l4F7ZX0QXu8IqS6gBpZUba0qAK2Wtdb6",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "micro-services-client",
+									"type": "string"
+								},
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -28,135 +58,6 @@
 				},
 				{
 					"name": "findByOrderId - 201",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base-url-order}}/201",
-							"host": [
-								"{{base-url-order}}"
-							],
-							"path": [
-								"201"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "findAll",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base-url-order}}",
-							"host": [
-								"{{base-url-order}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "createOrder",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"reference\": \"MS-20231201\",\r\n    \"amount\": 900,\r\n    \"paymentMethod\": \"PAYPAL\",\r\n    \"customerId\": \"67586453bb3e1e42fc8bff19\",\r\n    \"products\" : [\r\n        {\r\n            \"productId\": 1,\r\n            \"quantity\": 1\r\n        },\r\n        {\r\n            \"productId\": 251,\r\n            \"quantity\": 2\r\n        },\r\n        {\r\n            \"productId\": 201,\r\n            \"quantity\": 3\r\n        }\r\n    ]\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base-url-order}}",
-							"host": [
-								"{{base-url-order}}"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "ms-product",
-			"item": [
-				{
-					"name": "findAll",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base-url-project}}",
-							"host": [
-								"{{base-url-project}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "findByProductId - 51",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base-url-project}}/51",
-							"host": [
-								"{{base-url-project}}"
-							],
-							"path": [
-								"51"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "findByProductId - 101",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base-url-project}}/101",
-							"host": [
-								"{{base-url-project}}"
-							],
-							"path": [
-								"101"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "ms-customer",
-			"item": [
-				{
-					"name": "findByCustomerId",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base-url-customer}}/67585f25f246670dbf0e1af2",
-							"host": [
-								"{{base-url-customer}}"
-							],
-							"path": [
-								"67585f25f246670dbf0e1af2"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "findAll",
 					"request": {
 						"auth": {
 							"type": "oauth2",
@@ -191,6 +92,397 @@
 						"method": "GET",
 						"header": [],
 						"url": {
+							"raw": "{{base-url-order}}/201",
+							"host": [
+								"{{base-url-order}}"
+							],
+							"path": [
+								"201"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findAll",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url-order}}",
+							"host": [
+								"{{base-url-order}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createOrder",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"reference\": \"MS-20231377\",\r\n    \"amount\": 777,\r\n    \"paymentMethod\": \"PAYPAL\",\r\n    \"customerId\": \"67585f25f246670dbf0e1af2\",\r\n    \"products\" : [\r\n        {\r\n            \"productId\": 1,\r\n            \"quantity\": 1\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url-order}}",
+							"host": [
+								"{{base-url-order}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ms-product",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url-project}}",
+							"host": [
+								"{{base-url-project}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findByProductId - 51",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "accessTokenUrl",
+									"value": "http://localhost:9099/realms/micro-services/protocol/openid-connect/token",
+									"type": "string"
+								},
+								{
+									"key": "clientSecret",
+									"value": "l4F7ZX0QXu8IqS6gBpZUba0qAK2Wtdb6",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "micro-services-client",
+									"type": "string"
+								},
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url-project}}/51",
+							"host": [
+								"{{base-url-project}}"
+							],
+							"path": [
+								"51"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findByProductId - 101",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "accessTokenUrl",
+									"value": "http://localhost:9099/realms/micro-services/protocol/openid-connect/token",
+									"type": "string"
+								},
+								{
+									"key": "clientSecret",
+									"value": "l4F7ZX0QXu8IqS6gBpZUba0qAK2Wtdb6",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "micro-services-client",
+									"type": "string"
+								},
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url-project}}/101",
+							"host": [
+								"{{base-url-project}}"
+							],
+							"path": [
+								"101"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createProduct",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "accessTokenUrl",
+									"value": "http://localhost:9099/realms/micro-services/protocol/openid-connect/token",
+									"type": "string"
+								},
+								{
+									"key": "clientSecret",
+									"value": "l4F7ZX0QXu8IqS6gBpZUba0qAK2Wtdb6",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "micro-services-client",
+									"type": "string"
+								},
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Wide Normal Monitor 1\",\r\n    \"description\": \"wide normal monitor\",\r\n    \"availableQuantity\": 77,\r\n    \"price\": 399.99,\r\n    \"categoryId\": 51\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url-project}}",
+							"host": [
+								"{{base-url-project}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "purchaseProducts",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "accessTokenUrl",
+									"value": "http://localhost:9099/realms/micro-services/protocol/openid-connect/token",
+									"type": "string"
+								},
+								{
+									"key": "clientSecret",
+									"value": "l4F7ZX0QXu8IqS6gBpZUba0qAK2Wtdb6",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "micro-services-client",
+									"type": "string"
+								},
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"productId\": 101,\r\n        \"quantity\": 1.0\r\n    },\r\n    {\r\n        \"productId\": 151,\r\n        \"quantity\": 2.0\r\n    }\r\n]\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url-project}}/purchase",
+							"host": [
+								"{{base-url-project}}"
+							],
+							"path": [
+								"purchase"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ms-customer",
+			"item": [
+				{
+					"name": "findByCustomerId",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "accessTokenUrl",
+									"value": "http://localhost:9099/realms/micro-services/protocol/openid-connect/token",
+									"type": "string"
+								},
+								{
+									"key": "clientSecret",
+									"value": "l4F7ZX0QXu8IqS6gBpZUba0qAK2Wtdb6",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "micro-services-client",
+									"type": "string"
+								},
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url-customer}}/67585f25f246670dbf0e1af2",
+							"host": [
+								"{{base-url-customer}}"
+							],
+							"path": [
+								"67585f25f246670dbf0e1af2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "existsById",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "accessTokenUrl",
+									"value": "http://localhost:9099/realms/micro-services/protocol/openid-connect/token",
+									"type": "string"
+								},
+								{
+									"key": "clientSecret",
+									"value": "l4F7ZX0QXu8IqS6gBpZUba0qAK2Wtdb6",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "micro-services-client",
+									"type": "string"
+								},
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url-customer}}/exists/67585f25f246670dbf0e1af2",
+							"host": [
+								"{{base-url-customer}}"
+							],
+							"path": [
+								"exists",
+								"67585f25f246670dbf0e1af2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findAll",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
 							"raw": "{{base-url-customer}}",
 							"host": [
 								"{{base-url-customer}}"
@@ -202,6 +494,36 @@
 				{
 					"name": "createCustomer",
 					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "accessTokenUrl",
+									"value": "http://localhost:9099/realms/micro-services/protocol/openid-connect/token",
+									"type": "string"
+								},
+								{
+									"key": "clientSecret",
+									"value": "l4F7ZX0QXu8IqS6gBpZUba0qAK2Wtdb6",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "micro-services-client",
+									"type": "string"
+								},
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -225,11 +547,41 @@
 				{
 					"name": "updateCustomer",
 					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "accessTokenUrl",
+									"value": "http://localhost:9099/realms/micro-services/protocol/openid-connect/token",
+									"type": "string"
+								},
+								{
+									"key": "clientSecret",
+									"value": "l4F7ZX0QXu8IqS6gBpZUba0qAK2Wtdb6",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "micro-services-client",
+									"type": "string"
+								},
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": \"67585f25f246670dbf0e1af2\",\r\n    \"firstName\": \"Jan\",\r\n    \"lastName\": \"Nesvadba\",\r\n    \"email\": \"jan.nesvadba123@gmail.com\",\r\n    \"address\": {\r\n        \"street\": \"Olomoucká\",\r\n        \"houseNumber\": \"45\",\r\n        \"zipCode\": \"120 00\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"id\": \"67585f25f246670dbf0e1af2\",\r\n    \"firstName\": \"Jan\",\r\n    \"lastName\": \"Nesvadba\",\r\n    \"email\": \"jan.nesvadba123@gmail.com\",\r\n    \"address\": {\r\n        \"street\": \"Olomoucká\",\r\n        \"houseNumber\": \"47\",\r\n        \"zipCode\": \"120 00\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -248,15 +600,103 @@
 				{
 					"name": "deleteCustomer",
 					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "accessTokenUrl",
+									"value": "http://localhost:9099/realms/micro-services/protocol/openid-connect/token",
+									"type": "string"
+								},
+								{
+									"key": "clientSecret",
+									"value": "l4F7ZX0QXu8IqS6gBpZUba0qAK2Wtdb6",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "micro-services-client",
+									"type": "string"
+								},
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{base-url-customer}}/6758616cbb3e1e42fc8bff18",
+							"raw": "{{base-url-customer}}/676896ccb4853a03ec705baa",
 							"host": [
 								"{{base-url-customer}}"
 							],
 							"path": [
-								"6758616cbb3e1e42fc8bff18"
+								"676896ccb4853a03ec705baa"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ms-payment",
+			"item": [
+				{
+					"name": "createPayment",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "accessTokenUrl",
+									"value": "http://localhost:9099/realms/micro-services/protocol/openid-connect/token",
+									"type": "string"
+								},
+								{
+									"key": "clientSecret",
+									"value": "l4F7ZX0QXu8IqS6gBpZUba0qAK2Wtdb6",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "micro-services-client",
+									"type": "string"
+								},
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount\" : 530.00,\r\n    \"paymentMethod\": \"PAYPAL\",\r\n    \"orderId\": 602,\r\n    \"orderReference\": \"MS-20231278\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url-payment}}",
+							"host": [
+								"{{base-url-payment}}"
 							]
 						}
 					},
