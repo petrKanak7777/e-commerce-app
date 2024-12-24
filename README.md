@@ -69,6 +69,11 @@ view, and analyze logs stored in Elasticsearch.
 **Logstash:** http://localhost:5044/ \
 **Elastic-search:** http://localhost:9200/
 
+**Elasticsearch simple queries**
+level=INFO
+message= %some_sub_string% \
+message=%676aef9e5b8415bfbd11256e4f324617% \
+message=%676aef9e5b8415bfbd11256e4f324617% and level=INFO
 
 ### Actuator
 for order-ms: http://localhost:8070/actuator/health
