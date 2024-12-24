@@ -34,5 +34,17 @@ public interface OrderMapper {
     @Mapping(target = "totalAmount", source = "request.amount")
     @Mapping(target = "paymentMethod", source = "request.paymentMethod")
     @Mapping(target = "customerResponse", source = "customer")
+    @Mapping(target = "products", source = "products")
     OrderConfirmation toOrderConfirmation(OrderRequest request, CustomerResponse customer, List<ProductPurchaseResponse> products);
+
+    // todo: Do it better. Create ProductMapper and use it here.
+    default List<ProductPurchaseResponse> toProducts(List<ProductPurchaseResponse> products) {
+        if (products == null) {
+            return null;
+        }
+
+        return products
+                .stream()
+                .toList();
+    }
 }
