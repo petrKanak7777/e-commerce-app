@@ -88,12 +88,14 @@ With this setup we will authorize against gateway with **client-id** and **clien
 
 **Setup postman:**
 - Authorization: OAuth 2.0
-- Grant type: Client Credentials
+- Grant type `Client Credentials`
 - Access Token URL: http://localhost:9099/realms/micro-services/protocol/openid-connect/token
-- Client ID: micro-services-client
-- Client Secret: [value_from_keycloak]
-- Client Authentication: Send as Basic Auth header
-- get access token with button: Get New Access Token
+- Client ID `micro-services-client`
+- Client Secret `[value_from_keycloak]`
+- Client Authentication `Send as Basic Auth header`
+- Get access token with button `Get New Access Token`
+- Click on `Proceed` button and click on button `Use Token`
+- Now up under combo `Token Name`. Token value appear
 
 ### Docker
 ms-config-server: **docker build -t ms-config-server .** \

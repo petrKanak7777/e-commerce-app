@@ -144,7 +144,6 @@ class ProductServiceTest {
 
     private ProductRequest createProductRequest() {
         return new ProductRequest(
-                0,
                 "product0",
                 "description0",
                 1.0,

@@ -138,7 +138,10 @@ class ProductRepositoryIntegrationTest {
 
     @Test
     void testFindAllByIdInOrderById_givenProducts_whenFindAllByIdInOrderById_thenSuccess() {
-        var productIds = List.of(1, 2, 3);
+        var productIds = productRepository.findAll()
+                .stream()
+                .map(Product::getId)
+                .toList();
 
         var savedProducts = productRepository.findAllByIdInOrderById(productIds);
 

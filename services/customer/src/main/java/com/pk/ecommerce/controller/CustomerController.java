@@ -30,6 +30,7 @@ public class CustomerController {
     public ResponseEntity<String> createCustomer(
             @RequestBody @Valid CustomerRequest request
     ) {
+        log.info("call: /api/v1/customers, operation-name: createCustomer, params: request=[{}]", request);
         return ResponseEntity.ok(customerService.createCustomer(request));
     }
 
@@ -37,12 +38,14 @@ public class CustomerController {
     public ResponseEntity<Void> updateCustomer(
             @RequestBody @Valid CustomerRequest request
     ) {
+        log.info("call: /api/v1/customers, operation-name: updateCustomer, params: request=[{}]", request);
         customerService.updateCustomer(request);
         return ResponseEntity.accepted().build();
     }
 
     @GetMapping
     public ResponseEntity<List<CustomerResponse>> findAll() {
+        log.info("call: /api/v1/customers, operation-name: findAll, params:-");
         return ResponseEntity.ok(customerService.findAll());
     }
 
@@ -50,6 +53,7 @@ public class CustomerController {
     public ResponseEntity<Boolean> existsById(
             @PathVariable("customer-id") String customerId
     ) {
+        log.info("call: /api/v1/customers/exists/{customer-id}, operation-name: existsById, params: customer-id=[{}]", customerId);
         return ResponseEntity.ok(customerService.existsById(customerId));
     }
 
@@ -57,7 +61,7 @@ public class CustomerController {
     public ResponseEntity<CustomerResponse> findByCustomerId(
             @PathVariable("customer-id") String customerId
     ) {
-        log.info("call: /api/v1/customers/{customer-id}, operation-name: findByCustomerId, params: customerId=[{}]", customerId);
+        log.info("call: /api/v1/customers/{customer-id}, operation-name: findByCustomerId, params: customer-id=[{}]", customerId);
         return ResponseEntity.ok(customerService.findByCustomerId(customerId));
     }
 
@@ -65,6 +69,7 @@ public class CustomerController {
     public ResponseEntity<Void> deleteCustomer(
             @PathVariable("customer-id") String customerId
     ) {
+        log.info("call: /api/v1/customers/{customer-id}, operation-name: deleteCustomer, params: customer-id=[{}]", customerId);
         customerService.deleteCustomer(customerId);
         return ResponseEntity.accepted().build();
     }

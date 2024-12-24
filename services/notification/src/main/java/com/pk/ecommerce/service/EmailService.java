@@ -62,9 +62,9 @@ public class EmailService {
 
             messageHelper.setTo(destinationEmail);
             mailSender.send(mimeMessage);
-            log.info("INFO - Email successfully sent to {} with template {} ", destinationEmail, templateName);
+            log.info("INFO - Email successfully sent to=[{}] with template=[{}] ", destinationEmail, templateName);
         } catch (MessagingException e) {
-            log.warn("WARNING - Cannot send Email to {} ", destinationEmail);
+            log.warn("WARNING - Cannot send Email to=[{}] ", destinationEmail);
         }
 
     }
@@ -99,9 +99,9 @@ public class EmailService {
 
             messageHelper.setTo(destinationEmail);
             mailSender.send(mimeMessage);
-            log.info("INFO - Email successfully sent to {} with template {} ", destinationEmail, templateName);
+            log.info("INFO - Email successfully sent to=[{}] with template=[{}] ", destinationEmail, templateName);
         } catch (MessagingException e) {
-            log.warn("WARNING - Cannot send Email to {} ", destinationEmail);
+            log.warn("WARNING - Cannot send Email to=[{}] ", destinationEmail);
         }
 
     }

@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 
 @Builder
 public record PaymentRequest(
-        Integer id,
         BigDecimal amount,
         PaymentMethod paymentMethod,
         Integer orderId,

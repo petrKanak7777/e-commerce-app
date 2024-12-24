@@ -37,6 +37,7 @@ public class OrderLineService {
 
     public List<OrderLineResponse> findByOrderId(Integer orderId) {
         var orderLines = orderLineRepository.findAllByOrderId(orderId);
+        log.info("INFO - orderLines with size=[{}] was successfully returned", orderLines.size());
         return orderLines
                 .stream()
                 .map(orderLineMapper::toOrderLineResponse)

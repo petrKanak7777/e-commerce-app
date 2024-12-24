@@ -17,7 +17,6 @@ public class ProductMapper {
         }
 
         return Product.builder()
-                .id(request.id())
                 .name(request.name())
                 .description(request.description())
                 .availableQuantity(request.availableQuantity())

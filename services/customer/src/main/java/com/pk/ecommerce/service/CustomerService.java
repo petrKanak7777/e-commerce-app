@@ -27,6 +27,7 @@ public class CustomerService {
 
     public String createCustomer(CustomerRequest request) {
         var customer = customerRepository.save(customerMapper.toCustomer(request));
+        log.info("INFO - Customer with id=[{}] was successfully created", customer.getId());
         return customer.getId();
     }
 
@@ -37,6 +38,7 @@ public class CustomerService {
                 ));
         mergerCustomer(customer, request);
         customerRepository.save(customer);
+        log.info("INFO - Customer with id=[{}] was successfully updated", customer.getId());
     }
 
     private void mergerCustomer(Customer customer, CustomerRequest request) {
@@ -55,15 +57,23 @@ public class CustomerService {
     }
 
     public List<CustomerResponse> findAll() {
-        return customerRepository.findAll()
+        var customers = customerRepository.findAll()
                 .stream()
                 .map(customerMapper::toCustomerResponse)
                 .toList();
+        log.info("INFO - Customers with size=[{}] was successfully returned", customers.size());
+        return customers;
     }
 
     public Boolean existsById(String customerId) {
-        return customerRepository.findById(customerId)
+        var customerExists = customerRepository.findById(customerId)
                 .isPresent();
+        if(customerExists) {
+            log.info("INFO - Customer with id=[{}] exists", customerId);
+        } else {
+            log.error("ERROR - Customer with id=[{}] doesn't exists", customerId);
+        }
+        return customerExists;
     }
 
     public CustomerResponse findByCustomerId(String customerId) {
@@ -76,7 +86,7 @@ public class CustomerService {
                 .orElseThrow(() -> new ResourceNotFoundException(
                         format("ERROR - Cannot get customer. Customer with id=[%s] not found", customerId)
                 ));
-        log.info("INFO - Customer with id=[{}] and email=[{}] was successfully find", customer.id(), customer.email());
+        log.info("INFO - Customer with id=[{}] was successfully find", customer.id());
         return customer;
     }
 
@@ -86,5 +96,6 @@ public class CustomerService {
         }
 
         customerRepository.deleteById(customerId);
+        log.info("INFO - Customer with id=[{}] was successfully deleted", customerId);
     }
 }
