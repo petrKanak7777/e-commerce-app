@@ -75,6 +75,21 @@ message= %some_sub_string% \
 message=%676aef9e5b8415bfbd11256e4f324617% \
 message=%676aef9e5b8415bfbd11256e4f324617% and level=INFO
 
+### Grafana with Prometheus
+Based on: https://medium.com/simform-engineering/revolutionize-monitoring-empowering-spring-boot-applications-with-prometheus-and-grafana-e99c5c7248cf
+
+**Product service** prometheus endpoint: http://localhost:8050/actuator/prometheus
+
+**Prometheus**: http://localhost:9090 \
+**Grafana**: http://localhost:3000
+
+First time to log Grafana. Use Username: admin and Password: admin. And set new credentials.
+
+Username: pKanak \
+Password: pKanak
+
+Import **Spring boot template dashboard** with id: **11378**
+
 ### Actuator
 for order-ms: http://localhost:8070/actuator/health
 

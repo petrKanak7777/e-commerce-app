@@ -25,3 +25,9 @@ logging:
     root: INFO # TRACE DEBUG INFO WARN ERROR
     com:
       pk: INFO
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: [ "prometheus" ]
