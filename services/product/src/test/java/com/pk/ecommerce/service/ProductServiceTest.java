@@ -51,7 +51,7 @@ class ProductServiceTest {
     private ProductMetrics productMetrics;
 
     @Test
-    void test_createProduct_Success() {
+    void givenNewProduct_whenCreateProduct_thenSuccess() {
         when(productMapper.toProduct(createProductRequest())).thenReturn(createProductEntity());
         when(productRepository.save(any())).thenReturn(createProductEntity());
 
@@ -64,7 +64,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void test_findByProductId_Success() {
+    void givenProduct_whenFindByProductId_thenSuccess() {
         when(productRepository.findById(PRODUCT_ID_0)).thenReturn(Optional.of(createProductEntity()));
         when(productMapper.toProductResponse(any())).thenReturn(createProductResponse());
 
@@ -85,7 +85,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void test_findByProductId_NotFound() {
+    void givenProduct_whenFindByProductId_thenNotFound() {
         var productId = 1;
 
         when(productRepository.findById(productId)).thenReturn(Optional.empty());
@@ -96,7 +96,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void test_findAll_Success() {
+    void givenEmptyProducts_whenFindAll_thenSuccess() {
         when(productRepository.findAll()).thenReturn(new ArrayList<>());
 
         List<ProductResponse> result = productService.findAll();
@@ -108,12 +108,11 @@ class ProductServiceTest {
     }
 
     @Test
-    void test_purchaseProducts_Success() {
+    void givenProducts_whenPurchaseProducts_thenSuccess() {
         var request = List.of(new ProductPurchaseRequest(0, 2));
 
         when(productRepository.findAllByIdInOrderById(any())).thenReturn(List.of(createProductEntity()));
         when(productMapper.toProductPurchaseResponse(any(), anyDouble())).thenReturn(createProductPurchaseResponse());
-
 
         List<ProductPurchaseResponse> result = productService.purchaseProducts(request);
 
@@ -124,7 +123,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void test_purchaseProducts_whenStoredProductsDoesNotExist_thenExceptionIsThrown() {
+    void givenEmptyProducts_whenProductsDoNotExist_thenExceptionIsThrown() {
         var request = List.of(new ProductPurchaseRequest(0, 5));
 
         when(productRepository.findAllByIdInOrderById(any())).thenReturn(List.of());
@@ -135,7 +134,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void test_purchaseProducts_whenInsufficientStockQuantityOfProducts_thenExceptionIsThrown() {
+    void givenProducts_whenInsufficientStockQuantityOfProducts_thenExceptionIsThrown() {
         var request = List.of(new ProductPurchaseRequest(0, 5));
         var insufficientStockQuantityOfProducts = List.of(
                 new Product(0, "pro0", "desc0", 3.0, new BigDecimal(2), null));
