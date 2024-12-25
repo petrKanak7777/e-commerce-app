@@ -3,6 +3,7 @@ package com.pk.ecommerce.service;
 import com.pk.ecommerce.error.exception.ProductPurchaseException;
 import com.pk.ecommerce.error.exception.ResourceNotFoundException;
 import com.pk.ecommerce.mapper.ProductMapper;
+import com.pk.ecommerce.metric.ProductMetrics;
 import com.pk.ecommerce.model.entity.Category;
 import com.pk.ecommerce.model.entity.Product;
 import com.pk.ecommerce.model.request.ProductPurchaseRequest;
@@ -45,6 +46,9 @@ class ProductServiceTest {
 
     @Mock
     private ProductMapper productMapper;
+
+    @Mock
+    private ProductMetrics productMetrics;
 
     @Test
     void test_createProduct_Success() {
@@ -109,6 +113,7 @@ class ProductServiceTest {
 
         when(productRepository.findAllByIdInOrderById(any())).thenReturn(List.of(createProductEntity()));
         when(productMapper.toProductPurchaseResponse(any(), anyDouble())).thenReturn(createProductPurchaseResponse());
+
 
         List<ProductPurchaseResponse> result = productService.purchaseProducts(request);
 

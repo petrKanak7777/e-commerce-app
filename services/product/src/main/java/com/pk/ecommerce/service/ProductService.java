@@ -3,6 +3,7 @@ package com.pk.ecommerce.service;
 import com.pk.ecommerce.error.exception.ProductPurchaseException;
 import com.pk.ecommerce.error.exception.ResourceNotFoundException;
 import com.pk.ecommerce.mapper.ProductMapper;
+import com.pk.ecommerce.metric.ProductMetrics;
 import com.pk.ecommerce.model.request.ProductPurchaseRequest;
 import com.pk.ecommerce.model.request.ProductRequest;
 import com.pk.ecommerce.model.response.ProductPurchaseResponse;
@@ -25,6 +26,7 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
+    private final ProductMetrics productMetrics;
 
     public Integer createProduct(ProductRequest request) {
         var product = productRepository.save(productMapper.toProduct(request));
@@ -73,6 +75,7 @@ public class ProductService {
         }
 
         log.info("INFO - Products was successfully purchased");
+        productMetrics.incApiCallPurchasedProduct();
         return purchasedProducts;
     }
 

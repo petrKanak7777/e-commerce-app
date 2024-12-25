@@ -89,6 +89,7 @@ Username: pKanak \
 Password: pKanak
 
 Import **Spring boot template dashboard** with id: **11378**
+http://localhost:3000/d/spring_boot_21/spring-boot-2-1-system-monitor
 
 ### Actuator
 for order-ms: http://localhost:8070/actuator/health
