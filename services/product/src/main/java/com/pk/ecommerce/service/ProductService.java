@@ -4,6 +4,7 @@ import com.pk.ecommerce.error.exception.ProductPurchaseException;
 import com.pk.ecommerce.error.exception.ResourceNotFoundException;
 import com.pk.ecommerce.mapper.ProductMapper;
 import com.pk.ecommerce.metric.ProductMetrics;
+import com.pk.ecommerce.model.entity.Product;
 import com.pk.ecommerce.model.request.ProductPurchaseRequest;
 import com.pk.ecommerce.model.request.ProductRequest;
 import com.pk.ecommerce.model.response.ProductPurchaseResponse;
@@ -34,7 +35,6 @@ public class ProductService {
         return product.getId();
     }
 
-    // todo: divide it into multiple methods based on logic parts.
     public List<ProductPurchaseResponse> purchaseProducts(List<ProductPurchaseRequest> request) {
         var productsId = request
                 .stream()
@@ -52,6 +52,22 @@ public class ProductService {
                 .toList();
 
         var purchasedProducts = new ArrayList<ProductPurchaseResponse>();
+        var availableProducts = new ArrayList<Product>();
+        computePurchasedAndAvailableProducts(
+                storedRequest, storedProducts, availableProducts, purchasedProducts);
+
+        productRepository.saveAll(availableProducts);
+
+        log.info("INFO - Products was successfully purchased");
+        productMetrics.incApiCallPurchasedProduct();
+        return purchasedProducts;
+    }
+
+    private void computePurchasedAndAvailableProducts(
+            List<ProductPurchaseRequest> storedRequest,
+            List<Product> storedProducts,
+            List<Product> availableProducts,
+            List<ProductPurchaseResponse> purchasedProducts) {
         for(int i = 0; i < storedProducts.size(); i++) {
             var product = storedProducts.get(i);
             var productRequest = storedRequest.get(i);
@@ -63,20 +79,12 @@ public class ProductService {
                                 product.getAvailableQuantity()));
             }
 
-            var newAvaliableQuantity = product.getAvailableQuantity() - productRequest.quantity();
-            product.setAvailableQuantity(newAvaliableQuantity);
+            var newAvailableQuantity = product.getAvailableQuantity() - productRequest.quantity();
+            product.setAvailableQuantity(newAvailableQuantity);
 
-            //todo: only one database call and no storedProducts.size() database calls!
-            // so in
-            // * first phase: check for all availableQuantity, or throw new ProductPurchaseException
-            // * second phase: save newAvaliableQuantityList
-            productRepository.save(product);
+            availableProducts.add(product);
             purchasedProducts.add(productMapper.toProductPurchaseResponse(product, productRequest.quantity()));
         }
-
-        log.info("INFO - Products was successfully purchased");
-        productMetrics.incApiCallPurchasedProduct();
-        return purchasedProducts;
     }
 
     public ProductResponse findByProductId(Integer productId) {
