@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: product-service
+  cloud:
+    config:
+      enabled: false #Disable Spring Cloud Config during tests
+  flyway:
+    enabled: false
+eureka:
+  client:
+    enabled: false #Disable Eureka Client during tests
