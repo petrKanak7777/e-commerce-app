@@ -10,15 +10,11 @@ import org.springframework.stereotype.Component;
 
 import java.util.function.Supplier;
 
-/**
- * Based on: https://medium.com/turkcell/adding-custom-metrics-in-spring-boot-application-for-prometheus-a3893ee86b61
- *           https://www.baeldung.com/java-prometheus-client
- */
 @Slf4j
 @Component
 public class ProductMetrics {
     private final MeterRegistry meterRegistry;
-    private Counter purchasedProductCounter;
+    private Counter apiCallPurchaseProductsCounter;
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
 
@@ -30,16 +26,16 @@ public class ProductMetrics {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
 
-        registerApiCallPurchaseProductCounter();
+        registerApiCallPurchaseProductsCounter();
         registerProductCount();
         registerCategoryCount();
     }
 
-    private void registerApiCallPurchaseProductCounter() {
-        purchasedProductCounter = Counter.builder("api_endpoint_purchaseProducts_counter")
+    private void registerApiCallPurchaseProductsCounter() {
+        apiCallPurchaseProductsCounter = Counter.builder("api_call_purchase_products_counter")
                 .description("Number of Requests for purchaseProducts")
                 .register(meterRegistry);
-        log.info("INFO - RegisterMetric - purchased_product_counter is registered");
+        log.info("INFO - RegisterMetric - api_call_purchase_products_counter is registered");
     }
 
     private void registerProductCount() {
@@ -64,7 +60,7 @@ public class ProductMetrics {
         return categoryRepository::count;
     }
 
-    public void incApiCallPurchasedProduct() {
-        purchasedProductCounter.increment();
+    public void incApiCallPurchaseProducts() {
+        apiCallPurchaseProductsCounter.increment();
     }
 }

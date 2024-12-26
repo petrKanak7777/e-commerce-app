@@ -18,7 +18,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 2,
+  "id": 1,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -248,7 +248,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "builder",
-          "expr": "api_endpoint_purchaseProducts_counter_total",
+          "expr": "api_call_purchase_products_counter_total",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -273,6 +273,6 @@
   "timezone": "",
   "title": "Test Dashboard V0",
   "uid": "cdc04e58-f139-45d9-ae48-bae4d985f059",
-  "version": 7,
+  "version": 1,
   "weekStart": ""
 }

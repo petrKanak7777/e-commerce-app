@@ -59,7 +59,7 @@ public class ProductService {
         productRepository.saveAll(availableProducts);
 
         log.info("INFO - Products was successfully purchased");
-        productMetrics.incApiCallPurchasedProduct();
+        productMetrics.incApiCallPurchaseProducts();
         return purchasedProducts;
     }
 
