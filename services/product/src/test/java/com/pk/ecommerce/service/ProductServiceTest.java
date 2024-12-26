@@ -118,7 +118,7 @@ class ProductServiceTest {
 
         assertEquals(1, result.size());
         verify(productRepository, times(1)).findAllByIdInOrderById(any());
-        verify(productRepository, times(1)).save(any());
+        verify(productRepository, times(1)).saveAll(any());
         verify(productMapper, times(1)).toProductPurchaseResponse(any(), anyDouble());
     }
 

@@ -6,7 +6,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
@@ -20,8 +19,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
 @ActiveProfiles("test")
-@AutoConfigureTestDatabase(
-        replace = AutoConfigureTestDatabase.Replace.NONE)
 class ProductRepositoryIntegrationTest {
 
     @Autowired
@@ -30,29 +27,33 @@ class ProductRepositoryIntegrationTest {
     @Autowired
     private TestEntityManager entityManager;
 
-    private Product testProduct0;
-    private Product testProduct1;
-    private Product testProduct2;
     @Autowired
     private TestEntityManager testEntityManager;
 
+    private Product testProduct0;
+    private Product testProduct1;
+    private Product testProduct2;
+    private Category testCategory0;
+    private Category testCategory1;
+    private Category testCategory2;
+
     @BeforeEach
     void setUp() {
-        var testCategory0 = Category
+        testCategory0 = Category
                 .builder()
                 .name("name0")
                 .description("desc0")
                 .products(List.of())
                 .build();
 
-        var testCategory1 = Category
+        testCategory1 = Category
                 .builder()
                 .name("name1")
                 .description("desc1")
                 .products(List.of())
                 .build();
 
-        var testCategory2 = Category
+        testCategory2 = Category
                 .builder()
                 .name("name2")
                 .description("desc2")
@@ -100,6 +101,10 @@ class ProductRepositoryIntegrationTest {
         productRepository.delete(testProduct0);
         productRepository.delete(testProduct1);
         productRepository.delete(testProduct2);
+
+        testEntityManager.remove(testCategory0);
+        testEntityManager.remove(testCategory1);
+        testEntityManager.remove(testCategory1);
     }
 
     @Test
