@@ -1,4 +1,26 @@
 spring:
+  cloud:
+    openfeign:
+      oauth2:
+        enabled: true
+        clientRegistrationId: default
+        client-id: micro-services-client
+        client-secret: UNOPr47SylSlGhxntUYZ95U6PX9RG4rz
+        token-uri: http://localhost:9099/realms/micro-services/protocol/openid-connect/token
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9099/realms/micro-services
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:9099/realms/micro-services
+        registration:
+          keycloak:
+            client-id: micro-services-client
+            client-secret: UNOPr47SylSlGhxntUYZ95U6PX9RG4rz
+            authorization-grant-type: client_credentials
   datasource:
     url: jdbc:postgresql://localhost:5432/order
     username: pKanak
@@ -40,3 +62,7 @@ logging:
     root: INFO # TRACE DEBUG INFO WARN ERROR
     com:
       pk: INFO
+    org:
+      springframework:
+        web:
+          client: DEBUG

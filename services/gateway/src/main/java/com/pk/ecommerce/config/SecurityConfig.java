@@ -13,19 +13,20 @@ public class SecurityConfig {
 
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity serverHttpSecurity) {
-//        serverHttpSecurity
-//                .csrf(ServerHttpSecurity.CsrfSpec::disable)
-//                .authorizeExchange(exchange -> exchange
-//                        .pathMatchers("(/eureka/**)")
-//                        .permitAll()
-//                        .anyExchange()
-//                        .authenticated()
-//                )
-//                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
-        // For Test - Simple way how to disable security.
         serverHttpSecurity
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
-                .authorizeExchange().anyExchange().permitAll();
+                .authorizeExchange(exchange -> exchange
+                        .pathMatchers("(/eureka/**)")
+                        .permitAll()
+                        .anyExchange()
+                        .authenticated()
+                )
+                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
+
+        // For Test - Simple way how to disable security.
+//        serverHttpSecurity
+//                .csrf(ServerHttpSecurity.CsrfSpec::disable)
+//                .authorizeExchange().anyExchange().permitAll();
 
         return serverHttpSecurity.build();
     }
