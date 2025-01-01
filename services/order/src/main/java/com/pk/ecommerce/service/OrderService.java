@@ -7,6 +7,7 @@ import com.pk.ecommerce.error.Exception.BusinessException;
 import com.pk.ecommerce.error.exception.ResourceNotFoundException;
 import com.pk.ecommerce.kafka.producer.OrderProducer;
 import com.pk.ecommerce.mapper.OrderMapper;
+import com.pk.ecommerce.metric.OrderMetric;
 import com.pk.ecommerce.model.entity.Order;
 import com.pk.ecommerce.model.request.OrderRequest;
 import com.pk.ecommerce.model.response.CustomerResponse;
@@ -33,8 +34,11 @@ public class OrderService {
     private final OrderLineService orderLineService;
     private final OrderProducer orderProducer;
     private final PaymentClient paymentClient;
+    private final OrderMetric orderMetric;
 
     public Integer createOrder(OrderRequest request) {
+        orderMetric.createOrderTimerStart();
+
         var customer = getCustomer(request.customerId());
         var products = productClient.purchaseProducts(request.products());
         var order = saveOrder(request);
@@ -42,6 +46,9 @@ public class OrderService {
         orderLineService.saveOrderLines(request.products(), order.getId());
         paymentClient.requestOrderPayment(orderMapper.toPaymentRequest(request, order.getId(), customer));
         orderProducer.sendOrderConfirmation(orderMapper.toOrderConfirmation(request, customer, products));
+
+        orderMetric.incApiCallCreateOrder();
+        orderMetric.createOrderTimerStop();
 
         return order.getId();
     }

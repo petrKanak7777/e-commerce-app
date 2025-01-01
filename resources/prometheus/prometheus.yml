@@ -6,3 +6,10 @@ scrape_configs:
       - targets: ['host.docker.internal:8050']
         labels:
           application: 'product-service'
+  - job_name: 'OrderServiceMetrics'
+    metrics_path: '/actuator/prometheus'
+    scrape_interval: 3s
+    static_configs:
+      - targets: [ 'host.docker.internal:8070' ]
+        labels:
+          application: 'order-service'

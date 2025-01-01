@@ -1,5 +1,6 @@
 package com.pk.ecommerce.config;
 
+import lombok.NonNull;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -34,10 +36,10 @@ public class SecurityConfig {
     @SneakyThrows
     SecurityFilterChain securityFilterChain(final HttpSecurity httpSecurity) {
         return httpSecurity
-                .csrf().disable()
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         auth -> auth
-                                .requestMatchers(HttpMethod.GET, "/eureka/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/eureka/**", "/actuator/prometheus").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(new JwtConverter())))
@@ -49,7 +51,7 @@ public class SecurityConfig {
         private final JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
 
         @Override
-        public AbstractAuthenticationToken convert(Jwt jwt) {
+        public AbstractAuthenticationToken convert(@NonNull Jwt jwt) {
             final var authorities = Stream.concat(
                     jwtGrantedAuthoritiesConverter.convert(jwt).stream(),
                     extractResourceRoles(jwt).stream()).collect(Collectors.toSet()
@@ -62,13 +64,14 @@ public class SecurityConfig {
             return jwt.getClaim(JwtClaimNames.SUB);
         }
 
+        @SuppressWarnings("unchecked")
         private Collection<? extends GrantedAuthority> extractResourceRoles(final Jwt jwt) {
             Map<String, Object> resourceAccess = jwt.getClaim("resource_access");
             Map<String, Object> resource;
             Collection<String> resourceRoles;
 
             if (resourceAccess == null
-                    || (resource = (Map<String, Object>) resourceAccess.get(clientId)) == null
+                    || (resource = ((Map<String, Object>) resourceAccess.get(clientId))) == null
                     || (resourceRoles = (Collection<String>) resource.get("roles")) == null) {
                 return Set.of();
             }

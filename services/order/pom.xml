@@ -100,20 +100,6 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- Zipkin - log tracing (actuator must be present for Zipkin) -->
-		<dependency>
-			<groupId>io.micrometer</groupId>
-			<artifactId>micrometer-tracing-bridge-brave</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.zipkin.reporter2</groupId>
-			<artifactId>zipkin-reporter-brave</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
-
 		<!-- Mapstruct - mappers -->
 		<dependency>
 			<groupId>org.mapstruct</groupId>
@@ -144,6 +130,12 @@
 			<groupId>io.zipkin.brave</groupId>
 			<artifactId>brave-instrumentation-spring-web</artifactId>
 			<version>6.0.3</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-prometheus</artifactId>
+			<scope>runtime</scope>
 		</dependency>
 
 		<!-- logback -->

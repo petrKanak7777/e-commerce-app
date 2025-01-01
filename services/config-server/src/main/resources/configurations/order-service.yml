@@ -65,4 +65,10 @@ logging:
     org:
       springframework:
         web:
-          client: DEBUG
+          client: INFO
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: [ "prometheus" ]
