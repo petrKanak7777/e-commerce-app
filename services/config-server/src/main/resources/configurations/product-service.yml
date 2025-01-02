@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/product
+    url: jdbc:postgresql://${application.config.hostname}:5432/product
     username: pKanak
     password: pKanak
     driver-class-name: org.postgresql.Driver

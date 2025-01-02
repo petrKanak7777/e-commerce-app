@@ -3,7 +3,7 @@ spring:
     mongodb:
       username: pKanak
       password: pKanak
-      host: localhost
+      host: ${application.config.hostname}
       port: 27017
       database: customer
       authentication-database: admin

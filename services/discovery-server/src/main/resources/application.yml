@@ -1,5 +1,8 @@
+application:
+  config:
+    hostname: host.docker.internal #localhost
 spring:
   config:
-    import: optional:configserver:http://localhost:8888
+    import: optional:configserver:http://${application.config.hostname}:8888
   application:
     name: eureka-server

@@ -31,6 +31,14 @@ Connection information: \
 ![pg-db-connection](resources/images/db-conn.png)
 
 ### Kafka
+For correctly running Kafka, you must set `dockervm` variable
+in `hosts` file located for Windows on `C:\Windows\System32\drivers\etc`.
+Value of `dockervm` must be same like `host.docker.internal`
+
+```
+[host.docker.internal.value] dockervm
+```
+
 For inspecting Kafka. We can use **Offset Explorer tool**. \
 You can download this application here: https://www.kafkatool.com/download.html \
 To connect to kafka with zookeeper set these configurations:
@@ -70,15 +78,17 @@ view, and analyze logs stored in Elasticsearch.
 **Elastic-search:** http://localhost:9200/
 
 **Elasticsearch simple queries**
-level=INFO
-message= %some_sub_string% \
-message=%676aef9e5b8415bfbd11256e4f324617% \
-message=%676aef9e5b8415bfbd11256e4f324617% and level=INFO
+message: "/api/v1/orders" \
+message: "/api" and message: "purchase" \
+traceId : % 67755d41d40a1442d149d74e84ad312e % \
+traceId : % 67755d41d40a1442d149d74e84ad312e % and message: % /api/v1/orders %
+
 
 ### Grafana with Prometheus
 Based on: https://medium.com/simform-engineering/revolutionize-monitoring-empowering-spring-boot-applications-with-prometheus-and-grafana-e99c5c7248cf
 
-**Product service** prometheus endpoint: http://localhost:8050/actuator/prometheus
+**Product service** prometheus endpoint: http://localhost:8050/actuator/prometheus \
+**Order service** prometheus endpoint: http://localhost:8070/actuator/prometheus
 
 **Prometheus**: http://localhost:9090 \
 **Grafana**: http://localhost:3000
@@ -110,7 +120,7 @@ With this setup we will authorize against gateway with **client-id** and **clien
 **Setup postman:**
 - Authorization: OAuth 2.0
 - Grant type `Client Credentials`
-- Access Token URL: http://localhost:9099/realms/micro-services/protocol/openid-connect/token
+- Access Token URL: http://host.docker.internal:9099/realms/micro-services/protocol/openid-connect/token
 - Client ID `micro-services-client`
 - Client Secret `[value_from_keycloak]`
 - Client Authentication `Send as Basic Auth header`
@@ -119,6 +129,24 @@ With this setup we will authorize against gateway with **client-id** and **clien
 - Now up under combo `Token Name`. Token value appear
 
 ### Docker
+
+hosts file position on windows: `C:\Windows\System32\drivers\etc`.
+In file important key is: `host.docker.internal`
+
+To increase RAM, which docker use on windows create/edit file
+named `.wslconfig` in your user profile directory `C:\Users\<YourUsername>`. Basic
+file structure:
+```
+[wsl2]
+memory=10GB
+processors=16
+```
+
 ms-config-server: **docker build -t ms-config-server .** \
 ms-discovery-server: **docker build -t ms-discovery-server .** \
-ms-product: **docker build -t ms-product .**
+ms-gateway-service: **docker build -t ms-gateway-service .** \
+ms-product-service: **docker build -t ms-product-service .** \
+ms-notification-service: **docker build -t ms-notification-service .** \
+ms-order-service: **docker build -t ms-order-service .** \
+ms-payment-service: **docker build -t ms-payment-service .** \
+ms-customer-service: **docker build -t ms-customer-service .**

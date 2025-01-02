@@ -29,7 +29,8 @@ spring:
 server:
   port: 8222
 logging:
+  config: classpath:logback-spring.xml
   level:
-    root: DEBUG # TRACE DEBUG INFO WARN ERROR
+    root: INFO # TRACE DEBUG INFO WARN ERROR
     com:
-      pk: DEBUG
+      pk: INFO

@@ -61,31 +61,32 @@ services:
       - microservices-net
 
   zookeeper:
-    image: confluentinc/cp-zookeeper:latest
+    image: wurstmeister/zookeeper:latest
     container_name: ms_zookeeper
-    environment:
-      ZOOKEEPER_SERVER_ID: 1
-      ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
     ports:
-      - "22181:2181"
+      - "2181:2181"
     networks:
       - microservices-net
 
   kafka:
-    image: confluentinc/cp-kafka:latest
+    image: wurstmeister/kafka:latest
     container_name: ms_kafka
     ports:
       - "9092:9092"
     depends_on:
       - zookeeper
     environment:
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
-      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_LISTENERS:
+        "INTERNAL://kafka:9090,\
+         EXTERNAL://:9092"
+      KAFKA_ADVERTISED_LISTENERS:
+        "INTERNAL://kafka:9090,\
+         EXTERNAL://dockervm:9092"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP:
+        "INTERNAL:PLAINTEXT,\
+         EXTERNAL:PLAINTEXT"
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
     networks:
       - microservices-net
 
@@ -117,33 +118,123 @@ services:
     networks:
       - microservices-net
 
-#  config-server:
-#    container_name: ms_config_server
-#    image: ms-config-server
-#    ports:
-#      - "8888:8888"
-#    networks:
-#      - microservices-net
-#
-#  discovery-server:
-#    container_name: ms_discovery_server
-#    image: ms-discovery-server
-#    ports:
-#      - "8761:8761"
-#    networks:
-#      - microservices-net
-#    depends_on:
-#      - config-server
-#
-#  product:
-#    container_name: ms_product
-#    image: ms-product
-#    ports:
-#      - "8050:8050"
-#    networks:
-#      - microservices-net
-#    depends_on:
-#      - discovery-server
+  config-server:
+    container_name: ms_config_server
+    image: ms-config-server
+    environment:
+      _JAVA_OPTIONS: >
+#        -Xdebug
+#        -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+    ports:
+#      - "5005:5005"
+      - "8888:8888"
+    networks:
+      - microservices-net
+
+  discovery-server:
+    container_name: ms_discovery_server
+    image: ms-discovery-server
+    environment:
+      _JAVA_OPTIONS: >
+#        -Xdebug
+#        -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+    ports:
+#      - "5005:5005"
+      - "8761:8761"
+    networks:
+      - microservices-net
+    depends_on:
+      - config-server
+
+  gateway:
+    container_name: ms_gateway_service
+    image: ms-gateway-service
+    environment:
+      _JAVA_OPTIONS: >
+#        -Xdebug
+#        -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+    ports:
+#      - "5005:5005"
+      - "8222:8222"
+    networks:
+      - microservices-net
+    depends_on:
+      - discovery-server
+
+  product:
+    container_name: ms_product_service
+    image: ms-product-service
+    environment:
+      _JAVA_OPTIONS: >
+#        -Xdebug
+#        -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+    ports:
+      - "8050:8050"
+#      - "5005:5005"
+    networks:
+      - microservices-net
+    depends_on:
+      - gateway
+
+  customer:
+    container_name: ms_customer_service
+    image: ms-customer-service
+    environment:
+      _JAVA_OPTIONS: >
+#        -Xdebug
+#        -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+    ports:
+      - "8090:8090"
+#      - "5005:5005"
+    networks:
+      - microservices-net
+    depends_on:
+      - gateway
+
+  notification:
+    container_name: ms_notification_service
+    image: ms-notification-service
+    environment:
+      _JAVA_OPTIONS: >
+#        -Xdebug
+#        -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+    ports:
+      - "8040:8040"
+#      - "5005:5005"
+    networks:
+      - microservices-net
+    depends_on:
+      - gateway
+
+  order:
+    container_name: ms_order_service
+    image: ms-order-service
+    environment:
+      _JAVA_OPTIONS: >
+#        -Xdebug
+#        -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+    ports:
+      - "8070:8070"
+#      - "5005:5005"
+    networks:
+      - microservices-net
+    depends_on:
+      - gateway
+
+  payment:
+    container_name: ms_payment_service
+    image: ms-payment-service
+    environment:
+      _JAVA_OPTIONS: >
+#        -Xdebug
+#        -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+    ports:
+      - "8060:8060"
+#      - "5005:5005"
+    networks:
+      - microservices-net
+    depends_on:
+      - gateway
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.17.3
@@ -152,6 +243,8 @@ services:
       - discovery.type=single-node
     ports:
       - "9200:9200"
+    networks:
+      - microservices-net
 
   logstash:
     image: docker.elastic.co/logstash/logstash:7.17.3
@@ -160,6 +253,8 @@ services:
       - "5044:5044"
     volumes:
       - ./logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+    networks:
+      - microservices-net
 
   kibana:
     image: docker.elastic.co/kibana/kibana:7.17.3
@@ -168,6 +263,8 @@ services:
       - "5601:5601"
     environment:
       ELASTICSEARCH_URL: http://elasticsearch:9200
+    networks:
+      - microservices-net
 
   prometheus:
     image: prom/prometheus:v2.44.0

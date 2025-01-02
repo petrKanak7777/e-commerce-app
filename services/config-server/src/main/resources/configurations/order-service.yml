@@ -5,24 +5,24 @@ spring:
         enabled: true
         clientRegistrationId: default
         client-id: micro-services-client
-        client-secret: UNOPr47SylSlGhxntUYZ95U6PX9RG4rz
-        token-uri: http://localhost:9099/realms/micro-services/protocol/openid-connect/token
+        client-secret: aHjyBzvM29o1gWkec9nI4M3Lg7VpVd70
+        token-uri: http://${application.config.hostname}:9099/realms/micro-services/protocol/openid-connect/token
   security:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:9099/realms/micro-services
+          issuer-uri: http://${application.config.hostname}:9099/realms/micro-services
       client:
         provider:
           keycloak:
-            issuer-uri: http://localhost:9099/realms/micro-services
+            issuer-uri: http://${application.config.hostname}:9099/realms/micro-services
         registration:
           keycloak:
             client-id: micro-services-client
-            client-secret: UNOPr47SylSlGhxntUYZ95U6PX9RG4rz
+            client-secret: aHjyBzvM29o1gWkec9nI4M3Lg7VpVd70
             authorization-grant-type: client_credentials
   datasource:
-    url: jdbc:postgresql://localhost:5432/order
+    url: jdbc:postgresql://${application.config.hostname}:5432/order
     username: pKanak
     password: pKanak
     driver-class-name: org.postgresql.Driver
@@ -39,8 +39,9 @@ spring:
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
   kafka:
+    bootstrap-servers: dockervm:9092
     producer:
-      bootstrap-servers: localhost:9092
+      bootstrap-servers: dockervm:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       properties:
@@ -50,9 +51,9 @@ server:
 
 application:
   config:
-    customer-url: http://localhost:8222/api/v1/customers #In next phase use url from api-gateway! api-gateway-port(8222) - 8090
-    payment-url: http://localhost:8222/api/v1/payments #In next phase use url from api-gateway! api-gateway-port(8222) - 8060
-    product-url: http://localhost:8222/api/v1/products #In next phase use url from api-gateway! api-gateway-port(8222) - 8050
+    customer-url: http://${application.config.hostname}:8222/api/v1/customers #In next phase use url from api-gateway! api-gateway-port(8222) - 8090
+    payment-url: http://${application.config.hostname}:8222/api/v1/payments #In next phase use url from api-gateway! api-gateway-port(8222) - 8060
+    product-url: http://${application.config.hostname}:8222/api/v1/products #In next phase use url from api-gateway! api-gateway-port(8222) - 8050
     kafka:
       order-topic: order-topic
 
